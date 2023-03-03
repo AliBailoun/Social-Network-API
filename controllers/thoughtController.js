@@ -58,5 +58,34 @@ module.exports = {
             )
             .catch((err) =>
                 res.status(500).json(err));
+    },
+
+    addReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
+            { runValidators: true, new: true }
+        )
+            .then((thought) =>
+                !thought
+                    ? res.status(404).json({ message: "Can't add a reaction to a thought that doesn't exist" })
+                    : res.json(thought)
+            )
+            .catch((err) =>
+                res.status(500).json(err))
+    },
+    deleteReaction(req, res) {
+        Thought.findByIdAndDelete(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { _id: req.params.id } } },
+            { runValidators: true, new: true }
+        )
+            .then((thought) =>
+                !thought
+                    ? res.status(404).json({ message: "Can't delete reaction to a thought that doesn't exist" })
+                    : res.json(thought)
+            )
+            .catch((err) =>
+                res.status(500).json(err))
     }
 };
