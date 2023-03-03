@@ -15,7 +15,7 @@ module.exports = {
                     ? res.status(404).json({ message: "There is no thought associated with that ID" })
                     : res.json(thought)
             )
-            .catch((err) => re.status(500).json(err));
+            .catch((err) => res.status(500).json(err));
     },
     createThought(req, res) {
         Thought.create(req.body)
@@ -46,7 +46,8 @@ module.exports = {
             .catch((err) => res.status(500).json(err));
     },
     updateThought(req, res) {
-        Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
             { $set: req.body },
             { runValidators: true, new: true }
         )
