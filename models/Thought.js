@@ -23,9 +23,9 @@ const thoughtSchema = new Schema(
             required: true
         }
     },
-    {
-        reactions: [reactionSchema]
-    },
+    // {
+    //     reactions: [reactionSchema]
+    // },
     {
         toJSON: {
             virtuals: true
@@ -79,9 +79,9 @@ thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
 
-const Thought = model('Thought', thoughtSchema)
+const Thought = model('Thought', thoughtSchema);
+
+module.exports = Thought;
 
 
-const timeCreated = Thought.get('createdAt', Date);
 
-console.log(`The thought was created at ${timeCreated}`)
