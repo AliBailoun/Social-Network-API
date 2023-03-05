@@ -30,8 +30,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: "There is no user associated with that ID" })
-                    : Thought.deleteMany({ _id: { $in: User.thoughts } }
-                    )
+                    : res.status(200).json({ message: "User deleted successfully" })
             )
     },
     updateUser(req, res) {
